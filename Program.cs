@@ -1,10 +1,12 @@
 using Article;
 using Article.Data;
 using Article.Models;
+using Article.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("ArticleIdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ArticleIdentityDbContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'ArticleIdentityDbContextConnection' not found.");
 
 builder.Services.AddDbContext<ArticleIdentityDbContext>(options => options.UseSqlite(connectionString));
 
@@ -12,6 +14,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
