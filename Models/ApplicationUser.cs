@@ -8,4 +8,3 @@ public class ApplicationUser : IdentityUser<Guid>
 
     public override string NormalizedUserName => UserName.ToUpper();
 }
-
