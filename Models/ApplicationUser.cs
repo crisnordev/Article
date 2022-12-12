@@ -6,5 +6,5 @@ public class ApplicationUser : IdentityUser<Guid>
 {
     public override string UserName { get; set; } = string.Empty;
 
-    public override string NormalizedUserName => UserName.ToUpper();
+    public override string NormalizedUserName => UserName;
 }
