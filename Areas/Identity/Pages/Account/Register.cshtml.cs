@@ -73,8 +73,9 @@ namespace Article.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [Display(Name = "User Name")]
-            public string UserName { get; set; }
+            [DataType(DataType.Text)]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -120,8 +121,9 @@ namespace Article.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-
-                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
+                user.Name = Input.Name;
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetNormalizedUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

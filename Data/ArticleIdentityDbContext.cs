@@ -5,12 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Article.Data;
 
-public class ArticleIdentityDbContext : 
-    IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
+public class ArticleIdentityDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 {
-    public ArticleIdentityDbContext(
-        DbContextOptions<ArticleIdentityDbContext> options)
-        : base(options)
+    public ArticleIdentityDbContext(DbContextOptions<ArticleIdentityDbContext> options) : base(options)
     {
     }
 }

@@ -13,14 +13,6 @@ builder.Services.AddDbContext<ArticleIdentityDbContext>(options => options.UseSq
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ArticleIdentityDbContext>();
 
-builder.Services.Configure<IdentityOptions>(options =>
-{
-    options.User.AllowedUserNameCharacters =
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    options.User.RequireUniqueEmail = true;
-
-});
-
 // Add services to the container.
 builder.Services.AddRazorPages();
 
