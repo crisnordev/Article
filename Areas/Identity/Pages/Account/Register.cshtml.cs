@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+
 #nullable disable
 
 using System;
@@ -74,6 +75,7 @@ namespace Article.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "User Name")]
             public string UserName { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -88,7 +90,8 @@ namespace Article.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
+                MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -137,10 +140,10 @@ namespace Article.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    
+                    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
@@ -160,8 +163,8 @@ namespace Article.Areas.Identity.Pages.Account
             catch
             {
                 throw new InvalidOperationException($"Can't create an instance of '{nameof(ApplicationUser)}'. " +
-                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+                                                    $"Ensure that '{nameof(ApplicationUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+                                                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
@@ -171,6 +174,7 @@ namespace Article.Areas.Identity.Pages.Account
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
+
             return (IUserEmailStore<ApplicationUser>)_userStore;
         }
     }
