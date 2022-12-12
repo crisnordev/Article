@@ -8,9 +8,6 @@ on:
     branches:
       - main
   workflow_dispatch:
-    
-env:
-  ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_SQLITE_CONNECTION_STRING }}
 
 jobs:
   build:
@@ -25,19 +22,8 @@ jobs:
           dotnet-version: '7.x'
           include-prerelease: true
 
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          
-      - name: Install EF Tools
-        run: dotnet tool install --global dotnet-ef    
-
       - name: Build with dotnet
         run: dotnet build --configuration Release
-        
-      - name: Update database
-        run: dotnet ef database update  
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
@@ -67,5 +53,5 @@ jobs:
         with:
           app-name: 'articleidentity'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D2984E3B0F684422BDE0CB2E6B678773 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5A7DC64F0B0C46F1B295A1ECAA89876B }}
           package: .
